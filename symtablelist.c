@@ -74,7 +74,6 @@ int SymTable_put(SymTable_T oSymTable,
     }
     strcpy((char*)pNewBinding->key, pcKey);
     pNewBinding->value = pvValue;
-    pNewBinding->pNextBinding = (struct Binding*)malloc(sizeof(struct Binding));
     if(oSymTable->head == NULL) {
         oSymTable->head = pNewBinding;
         oSymTable->size = 1;
