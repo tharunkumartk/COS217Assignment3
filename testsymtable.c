@@ -107,14 +107,13 @@ static void testBasics(void)
    printf("------------------------------------------------------\n");
    printf("Testing the most basic SymTable functions.\n");
    printf("No output should appear here:\n");
-   
-   /* fflush(stdout); */
+   fflush(stdout);
+   /*  */
 
 
    /* Test SymTable_new(). */
 
    oSymTable = SymTable_new();
-   printf("please god ");
    ASSURE(oSymTable != NULL);
 
    /* Test SymTable_put() and SymTable_getLength(). */
@@ -953,7 +952,6 @@ int main(int argc, char *argv[])
 #endif
 
    testBasics();
-   printf("does this work");
    testKeyComparison();
    testKeyOwnership();
    testRemove();
