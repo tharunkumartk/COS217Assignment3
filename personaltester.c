@@ -38,7 +38,6 @@ int main(int argc, char *argv[]) {
    printf("------------------------------------------------------\n");
    printf("Testing the most basic SymTable functions.\n");
    printf("No output should appear here:\n");
-   fflush(stdout);
    /*  */
 
 
@@ -46,7 +45,7 @@ int main(int argc, char *argv[]) {
 
    oSymTable = SymTable_new();
    ASSURE(oSymTable != NULL);
-
+    printf("please");
    /* Test SymTable_put() and SymTable_getLength(). */
 
    iSuccessful = SymTable_put(oSymTable, acJeter, acShortstop);
