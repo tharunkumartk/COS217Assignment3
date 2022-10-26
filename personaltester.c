@@ -42,10 +42,10 @@ int main(int argc, char *argv[]) {
 
 
    /* Test SymTable_new(). */
+    printf("please");
 
    oSymTable = SymTable_new();
    ASSURE(oSymTable != NULL);
-    printf("please");
    /* Test SymTable_put() and SymTable_getLength(). */
 
    iSuccessful = SymTable_put(oSymTable, acJeter, acShortstop);
