@@ -114,7 +114,7 @@ void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
         pCurrentBinding = pCurrentBinding->value)
     {
         if(strcmp(pCurrentBinding->key,pcKey)==0)
-            return pCurrentBinding->value;
+            return (void *)pCurrentBinding->value;
     }
     return NULL;
 }
@@ -132,10 +132,10 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
             oSymTable->size = oSymTable->size - 1;
             if(prevBinding==NULL) {
                 oSymTable->head = pCurrentBinding->pNextBinding;
-                return pCurrentBinding->value;
+                return (void *)pCurrentBinding->value;
             }
             prevBinding->pNextBinding= pCurrentBinding->pNextBinding;
-            return pCurrentBinding->value;
+            return (void *)pCurrentBinding->value;
         }
         prevBinding = pCurrentBinding;
     }
