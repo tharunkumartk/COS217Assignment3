@@ -83,7 +83,7 @@ void *SymTable_replace(SymTable_T oSymTable,
         pCurrentBinding = pCurrentBinding->pNextBinding)
     {
         if(strcmp(pCurrentBinding->key,pcKey)==0) {
-            ret = pCurrentBinding->value;
+            ret = (void *)pCurrentBinding->value;
             pCurrentBinding->value=pvValue;
             return ret;
         }
@@ -156,6 +156,5 @@ void SymTable_map(SymTable_T oSymTable,
     {
         (*pfApply)(pCurrentBinding->key,pCurrentBinding->value,pvExtra);
     }
-    return NULL;
 }
 
