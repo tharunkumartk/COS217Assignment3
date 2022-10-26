@@ -1,6 +1,8 @@
 #include "symtable.h"
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
+
 struct Binding
 {
    const char *key;
