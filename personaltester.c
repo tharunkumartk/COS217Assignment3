@@ -37,13 +37,13 @@ int main(int argc, char *argv[]) {
 
    printf("------------------------------------------------------\n");
    printf("Testing the most basic SymTable functions.\n");
-       printf("please");
    printf("No output should appear here:\n");
 
    /*  */
 
 
    /* Test SymTable_new(). */
+       printf("please");
 
    oSymTable = SymTable_new();
    ASSURE(oSymTable != NULL);
