@@ -5,4 +5,5 @@
 int main(int argc, char *argv[]) {
     SymTable_T arr = SymTable_new();
     printf("Success");
+    return 0;
 }
