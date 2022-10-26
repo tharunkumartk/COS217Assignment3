@@ -51,19 +51,19 @@ int SymTable_put(SymTable_T oSymTable,
    const char *pcKey, const void *pvValue) {
     struct Binding *pNewBinding;
     struct Binding *pCurrentBinding;
-    struct Binding *pNextBinding;
+    struct Binding *NextBinding;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
     for (pCurrentBinding = oSymTable->head;
         pCurrentBinding != NULL;
-        pCurrentBinding = pNextBinding)
+        pCurrentBinding = NextBinding)
     {
-        pNextBinding = pCurrentBinding->pNextBinding;
+        NextBinding = pCurrentBinding->pNextBinding;
         printf("%s",pCurrentBinding->key);
         if(strcmp(pCurrentBinding->key,pcKey)==0) 
             return 0;
-        if(pNextBinding==NULL) break;
+        if(NextBinding==NULL) break;
     }
     pNewBinding = (struct Binding*)malloc(sizeof(struct Binding));
     if(pNewBinding==NULL) return 0;
