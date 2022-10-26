@@ -1,7 +1,6 @@
 #include "symtable.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "testsymtable.c"
 #include <assert.h>
 #define ASSURE(i) assure(i, __LINE__)
 
