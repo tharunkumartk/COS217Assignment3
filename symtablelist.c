@@ -54,6 +54,7 @@ int SymTable_put(SymTable_T oSymTable,
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
     assert(pvValue != NULL);
+
     for (pCurrentBinding = oSymTable->head;
         pCurrentBinding != NULL;
         pCurrentBinding = pCurrentBinding->pNextBinding)
@@ -68,6 +69,11 @@ int SymTable_put(SymTable_T oSymTable,
     if(pNewBinding->key == NULL) return 0;
     strcpy((char*)pNewBinding->key, pcKey);
     pNewBinding->value = pvValue;
+    if(oSymTable->head == NULL) {
+        oSymTable->head = pNewBinding;
+        oSymTable->size = 1;
+        return 1;
+    }
     pCurrentBinding->pNextBinding = pNewBinding;
     oSymTable->size = oSymTable->size + 1;
     return 1;
