@@ -1,6 +1,6 @@
 #include "symtable.h"
 #include <string.h>
-#include <stddef.h>
+#include <stdlib.h>
 struct Binding
 {
    const char *key;
@@ -97,7 +97,7 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
     assert(pcKey != NULL);
     for (pCurrentBinding = oSymTable->head;
         pCurrentBinding != NULL;
-        pCurrentBinding = pcCurrentBinding->value)
+        pCurrentBinding = pCurrentBinding->value)
     {
         if(strcmp(pCurrentBinding->key,pcKey)==0)
             return 1;
@@ -111,7 +111,7 @@ void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
     assert(pcKey != NULL);
     for (pCurrentBinding = oSymTable->head;
         pCurrentBinding != NULL;
-        pCurrentBinding = pcCurrentBinding->value)
+        pCurrentBinding = pCurrentBinding->value)
     {
         if(strcmp(pCurrentBinding->key,pcKey)==0)
             return pCurrentBinding->value;
@@ -126,7 +126,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     assert(pcKey != NULL);
     for (pCurrentBinding = oSymTable->head;
         pCurrentBinding != NULL;
-        pCurrentBinding = pcCurrentBinding->value)
+        pCurrentBinding = pCurrentBinding->value)
     {
         if(strcmp(pCurrentBinding->key,pcKey)==0) {
             oSymTable->size = oSymTable->size - 1;
@@ -152,7 +152,7 @@ void SymTable_map(SymTable_T oSymTable,
     assert(pfApply != NULL);
     for (pCurrentBinding = oSymTable->head;
         pCurrentBinding != NULL;
-        pCurrentBinding = pcCurrentBinding->value)
+        pCurrentBinding = pCurrentBinding->value)
     {
         (*pfApply)(pCurrentBinding->key,pCurrentBinding->value,pvExtra);
     }
