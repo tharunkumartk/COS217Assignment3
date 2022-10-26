@@ -95,7 +95,7 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
     assert(pcKey != NULL);
     for (pCurrentBinding = oSymTable->head;
         pCurrentBinding != NULL;
-        pCurrentBinding = pCurrentBinding->value)
+        pCurrentBinding = pCurrentBinding->pNextBinding)
     {
         if(strcmp(pCurrentBinding->key,pcKey)==0)
             return 1;
@@ -109,7 +109,7 @@ void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
     assert(pcKey != NULL);
     for (pCurrentBinding = oSymTable->head;
         pCurrentBinding != NULL;
-        pCurrentBinding = pCurrentBinding->value)
+        pCurrentBinding = pCurrentBinding->pNextBinding)
     {
         if(strcmp(pCurrentBinding->key,pcKey)==0)
             return (void *)pCurrentBinding->value;
@@ -124,7 +124,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     assert(pcKey != NULL);
     for (pCurrentBinding = oSymTable->head;
         pCurrentBinding != NULL;
-        pCurrentBinding = pCurrentBinding->value)
+        pCurrentBinding = pCurrentBinding->pNextBinding)
     {
         if(strcmp(pCurrentBinding->key,pcKey)==0) {
             oSymTable->size = oSymTable->size - 1;
@@ -148,7 +148,7 @@ void SymTable_map(SymTable_T oSymTable,
     assert(pfApply != NULL);
     for (pCurrentBinding = oSymTable->head;
         pCurrentBinding != NULL;
-        pCurrentBinding = pCurrentBinding->value)
+        pCurrentBinding = pCurrentBinding->pNextBinding)
     {
         (*pfApply)(pCurrentBinding->key,(void *)pCurrentBinding->value,(void *)pvExtra);
     }
