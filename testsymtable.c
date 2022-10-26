@@ -112,6 +112,7 @@ static void testBasics(void)
    /* Test SymTable_new(). */
 
    oSymTable = SymTable_new();
+   printf("please god ");
    ASSURE(oSymTable != NULL);
 
    /* Test SymTable_put() and SymTable_getLength(). */
