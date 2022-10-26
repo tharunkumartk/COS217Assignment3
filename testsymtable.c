@@ -953,6 +953,7 @@ int main(int argc, char *argv[])
 #endif
 
    testBasics();
+   printf("does this work");
    testKeyComparison();
    testKeyOwnership();
    testRemove();
