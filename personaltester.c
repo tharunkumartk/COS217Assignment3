@@ -35,7 +35,10 @@ int main(int argc, char *argv[]) {
    int iFound;
    size_t uLength;
 
-
+   printf("------------------------------------------------------\n");
+   printf("Testing the most basic SymTable functions.\n");
+       printf("please");
+   printf("No output should appear here:\n");
 
    /*  */
 
