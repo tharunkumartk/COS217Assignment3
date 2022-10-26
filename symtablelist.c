@@ -58,7 +58,7 @@ int SymTable_put(SymTable_T oSymTable,
         pCurrentBinding != NULL;
         pCurrentBinding = pCurrentBinding->pNextBinding)
     {
-        if(strcmp(pCurrentBinding->key,pcKey)!=0) 
+        if(strcmp(pCurrentBinding->key,pcKey)==0) 
             return 0;
         if(pCurrentBinding->pNextBinding==NULL) break;
     }
