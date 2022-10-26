@@ -41,6 +41,8 @@ size_t SymTable_getLength(SymTable_T oSymTable) {
     struct Binding *pCurrentBinding;
     struct Binding *pNextBinding;
     size_t length;
+    assert(oSymTable != NULL);
+
     length=0;
     for (pCurrentBinding = oSymTable->head;
         pCurrentBinding != NULL;
@@ -58,6 +60,8 @@ int SymTable_put(SymTable_T oSymTable,
     struct Binding *pCurrentBinding;
     struct Binding *pNextBinding;
     assert(oSymTable != NULL);
+    assert(pcKey != NULL);
+    assert(pvValue != NULL);
 
     pNewBinding = (struct StackNode*)malloc(sizeof(struct StackNode));
     if (pNewBinding == NULL)
@@ -79,7 +83,26 @@ int SymTable_put(SymTable_T oSymTable,
    }
 
 void *SymTable_replace(SymTable_T oSymTable,
-     const char *pcKey, const void *pvValue);
+    const char *pcKey, const void *pvValue) {
+    struct Binding *pCurrentBinding;
+    struct Binding *pNextBinding;
+    void *ret;
+    assert(oSymTable != NULL);
+    assert(pcKey != NULL);
+    assert(pvValue != NULL);
+    for (pCurrentBinding = oSymTable->head;
+        pCurrentBinding != NULL;
+        pCurrentBinding = pNextBinding)
+    {
+        pNextBinding = pCurrentBinding->pNextBinding;
+        if(strcmp(pCurrentBinding->key,pcKey)==0) {
+            ret = pCurrentBinding->value;
+            pCurrentBinding->value=pvValue;
+            return ret;
+        }
+    }
+    return NULL;
+}
 
 int SymTable_contains(SymTable_T oSymTable, const char *pcKey);
 
