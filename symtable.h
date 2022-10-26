@@ -1,6 +1,9 @@
 #include <stddef.h>
-#ifndef STRING_INCLUDED
-#define STRING_INCLUDED
+#include <assert.h>
+#ifndef SYMTABLE_INCLUDED
+#define SYMTABLE_INCLUDED
+typedef struct SymTable *SymTable_T;
+
 SymTable_T SymTable_new(void);
 
 void SymTable_free(SymTable_T oSymTable);
