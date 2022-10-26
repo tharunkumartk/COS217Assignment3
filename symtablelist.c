@@ -62,9 +62,9 @@ int SymTable_put(SymTable_T oSymTable,
             return 0;
         if(pCurrentBinding->pNextBinding==NULL) break;
     }
-    pNewBinding = (struct StackNode*)malloc(sizeof(struct StackNode));
+    pNewBinding = (struct Binding*)malloc(sizeof(struct Binding));
     pNewBinding->key = (const char*)malloc(strlen(pcKey) + 1);
-    strcpy((char*)p->key, pcKey);
+    strcpy((char*)pNewBinding->key, pcKey);
     pNewBinding->value = pvValue;
     pCurrentBinding->pNextBinding = pNewBinding;
     oSymTable->size = oSymTable->size + 1;
