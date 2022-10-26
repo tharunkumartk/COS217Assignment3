@@ -150,7 +150,7 @@ void SymTable_map(SymTable_T oSymTable,
         pCurrentBinding != NULL;
         pCurrentBinding = pCurrentBinding->value)
     {
-        (*pfApply)(pCurrentBinding->key,pCurrentBinding->value,pvExtra);
+        (*pfApply)(pCurrentBinding->key,(void *)pCurrentBinding->value,(void *)pvExtra);
     }
 }
 
