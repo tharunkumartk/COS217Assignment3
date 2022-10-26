@@ -43,7 +43,6 @@ int main(int argc, char *argv[]) {
 
 
    /* Test SymTable_new(). */
-       printf("please");
 
    oSymTable = SymTable_new();
    ASSURE(oSymTable != NULL);
