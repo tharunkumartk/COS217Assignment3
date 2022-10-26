@@ -15,6 +15,7 @@ struct SymTable
 };
 
 SymTable_T SymTable_new(void) {
+    printf("i got here");
     SymTable_T oSymTable;
     oSymTable = (SymTable_T)malloc(sizeof(struct SymTable));
     if (oSymTable == NULL)
