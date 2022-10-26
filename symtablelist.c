@@ -53,7 +53,6 @@ int SymTable_put(SymTable_T oSymTable,
     struct Binding *pCurrentBinding;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-    assert(pvValue != NULL);
 
     for (pCurrentBinding = oSymTable->head;
         pCurrentBinding != NULL;
@@ -85,7 +84,6 @@ void *SymTable_replace(SymTable_T oSymTable,
     void *ret;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-    assert(pvValue != NULL);
     for (pCurrentBinding = oSymTable->head;
         pCurrentBinding != NULL;
         pCurrentBinding = pCurrentBinding->pNextBinding)
