@@ -14,7 +14,7 @@ struct SymTable
 {
    struct Binding **head;
    size_t size;
-   size_t *uBucketCount
+   size_t *uBucketCount;
 };
 
 const size_t BUCKET_COUNTS[18] = {(size_t)509, (size_t)1021, (size_t)2039, 
@@ -44,7 +44,7 @@ SymTable_T SymTable_new(void) {
     if (oSymTable == NULL)
         return NULL;
     oSymTable->uBucketCount = &BUCKET_COUNTS[0];
-    oSymTable->head = (struct Binding **)calloc(oSymTable->uBucketCount,sizeof(struct Binding*));
+    oSymTable->head = (struct Binding **)calloc(*(oSymTable->uBucketCount),sizeof(struct Binding*));
     oSymTable->size = 0;
     return oSymTable;
 }
@@ -90,7 +90,7 @@ int SymTable_put(SymTable_T oSymTable,
         newSymTable = SymTable_new();
         if(newSymTable==NULL) return 0;
         newSymTable->uBucketCount = oSymTable->uBucketCount+1;
-        newSymTable->head = (struct Binding **)calloc(newSymTable->uBucketCount,sizeof(struct Binding*));
+        newSymTable->head = (struct Binding **)calloc(*(oSymTable->uBucketCount),sizeof(struct Binding*));
         for(iterator = 0; iterator<*(oSymTable->uBucketCount); iterator++) {
             for (pCurrentBinding = oSymTable->head[iterator];
                 pCurrentBinding != NULL;
