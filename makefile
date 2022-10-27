@@ -6,15 +6,15 @@ CFLAGS =
 # CFLAGS = -D NDEBUG
 # CFLAGS = -D NDEBUG -O
 # Dependency rules for non-file targets
-list all:	testsymtablelist
-list clobber:	clean
+listall:	testsymtablelist
+listclobber:	clean
 	rm -f *~ \#*\#
-list clean:
+listclean:
 	rm -f testsymtablelist *.o
-hash all:	testsymtablehash
-hash clobber:	clean
+hashall:	testsymtablehash
+hashclobber:	clean
 	rm -f *~ \#*\#
-hash clean:
+hashclean:
 	rm -f testsymtablehash *.o
 # Dependency rules for file targets
 testsymtablelist: testsymtable.o symtablelist.o
