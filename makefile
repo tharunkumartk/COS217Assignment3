@@ -13,7 +13,7 @@ clean:
 	rm -f testsymtablelist *.o
 # Dependency rules for file targets
 testsymtablelist: testsymtable.o symtablelist.o
-	$(CC) $(CFLAGS) testintmath.o intmath.o -o testsymtablelist
+	$(CC) $(CFLAGS) symtablelist.o testsymtable.o -o testsymtablelist
 symtablelist.o: symtablelist.c symtable.h
 	$(CC) $(CFLAGS) -c symtablelist.c symtable.h
 testsymtable.o: testsymtable.c symtable.h
