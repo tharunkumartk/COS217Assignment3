@@ -84,7 +84,7 @@ int SymTable_put(SymTable_T oSymTable,
     {
         if(strcmp(pCurrentBinding->key,pcKey)==0) 
             return 0;
-        if(index==oSymTable->size) break;
+        if(pCurrentBinding->pNextBinding==NULL) break;
     }
     pNewBinding = (struct Binding*)malloc(sizeof(struct Binding));
     if(pNewBinding==NULL) return 0;
