@@ -41,10 +41,7 @@ SymTable_T SymTable_new(void) {
     oSymTable = (SymTable_T)malloc(sizeof(struct SymTable));
     if (oSymTable == NULL)
         return NULL;
-    for(iterator = 0; iterator<uBucketCount; iterator++) {
-        oSymTable->head[iterator] = (struct Binding*)calloc(1, sizeof(struct Binding));
-        oSymTable->head[iterator] = NULL;
-    }
+    oSymTable->head = (struct Binding **)calloc(uBucketCount,sizeof(struct Binding*))
     oSymTable->size = 0;
     return oSymTable;
 }
