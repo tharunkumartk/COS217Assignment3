@@ -6,11 +6,11 @@ CFLAGS =
 # CFLAGS = -D NDEBUG
 # CFLAGS = -D NDEBUG -O
 # Dependency rules for non-file targets
-all: testsymtablelist
-clobber: clean
-rm -f *~ \#*\#
+all:	testsymtablelist
+clobber:	clean
+	rm -f *~ \#*\#
 clean:
-rm -f testsymtablelist *.o
+	rm -f testsymtablelist *.o
 # Dependency rules for file targets
 testsymtablelist: testsymtable.o symtablelist.o
 	$(CC) $(CFLAGS) testintmath.o intmath.o -o testsymtablelist
