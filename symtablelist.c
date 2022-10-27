@@ -37,7 +37,7 @@ void SymTable_free(SymTable_T oSymTable) {
         pCurrentBinding = pNextBinding)
     {
         pNextBinding = pCurrentBinding->pNextBinding;
-        free((void *) (pCurrentBinding->key));
+        free((char *) (pCurrentBinding->key));
         free(pCurrentBinding);
     }
     free(oSymTable);
