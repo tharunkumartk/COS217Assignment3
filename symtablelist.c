@@ -30,9 +30,7 @@ SymTable_T SymTable_new(void) {
 void SymTable_free(SymTable_T oSymTable) {
     struct Binding *pCurrentBinding;
     struct Binding *pNextBinding;
-
     assert(oSymTable != NULL);
-
     for (pCurrentBinding = oSymTable->head;
         pCurrentBinding != NULL;
         pCurrentBinding = pNextBinding)
