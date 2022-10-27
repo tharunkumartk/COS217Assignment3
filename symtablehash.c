@@ -84,7 +84,7 @@ int SymTable_put(SymTable_T oSymTable,
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
     if(oSymTable->size == *(oSymTable->uBucketCount)) {
-        if(oSymTable->uBucketCount-BUCKET_COUNTS == BUCKET_COUNT_SIZE) {
+        if((size_t)(oSymTable->uBucketCount-BUCKET_COUNTS) == BUCKET_COUNT_SIZE) {
             return 0;
         }
         newSymTable = SymTable_new();
