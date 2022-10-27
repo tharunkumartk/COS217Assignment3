@@ -3,16 +3,31 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/*
+    Binding is a representation of a key-value pair and acts like a Node in the linkedlists 
+    inside SymTable. 
+*/
 struct Binding
 {
+    /* key points to an immutable key in the key-value pair. It is of type char*. */
    const char *key;
+    /* value points to the value represented by key in the key-value pair. It is of type void*
+        and can be any type that the client defines. */
    const void *value;
+   /* pNextBinding points to the next key-value pair in the linkedlist. It is of type struct 
+        Binding*.*/
    struct Binding *pNextBinding;
 };
 
+/*
+    SymTable is a representation of the symbol table implemented with a linkedlist. It contains
+    an Binding pointer pointing to the first item in the linkedlist.
+*/
 struct SymTable
 {
+    /* head points to the first Binding in the linked list. It is of type struct Binding**. */
    struct Binding *head;
+    /* size represents the number of key-value pairs within the SymTable. It is of type size_t. */
    size_t size;
 };
 
