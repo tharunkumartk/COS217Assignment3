@@ -17,9 +17,9 @@ struct SymTable
    size_t *uBucketCount;
 };
 
-const size_t BUCKET_COUNTS[18] = {(size_t)509, (size_t)1021, (size_t)2039, 
+static const size_t BUCKET_COUNT_SIZE = 8;
+static const size_t BUCKET_COUNTS[BUCKET_COUNT_SIZE] = {(size_t)509, (size_t)1021, (size_t)2039, 
     (size_t)4093, (size_t)8191, (size_t)16381, (size_t)32749, (size_t)65521};
-const size_t BUCKET_COUNT_SIZE = 8;
 
 /* Return a hash code for pcKey that is between 0 and uBucketCount-1,
    inclusive. */
@@ -190,6 +190,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     size_t index;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
+    prevBinding = NULL;
     index = SymTable_hash(pcKey,*(oSymTable->uBucketCount));
     for (pCurrentBinding = oSymTable->head[index];
         pCurrentBinding != NULL;

@@ -135,6 +135,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     void *prevValue;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
+    prevBinding=NULL;
     for (pCurrentBinding = oSymTable->head;
         pCurrentBinding != NULL;
         pCurrentBinding = pCurrentBinding->pNextBinding)
