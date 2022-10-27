@@ -43,7 +43,7 @@ SymTable_T SymTable_new(void) {
     oSymTable = (SymTable_T)malloc(sizeof(struct SymTable));
     if (oSymTable == NULL)
         return NULL;
-    oSymTable->uBucketCount = &BUCKET_COUNTS[0];
+    oSymTable->uBucketCount = (size_t *)&BUCKET_COUNTS[0];
     oSymTable->head = (struct Binding **)calloc(*(oSymTable->uBucketCount),sizeof(struct Binding*));
     oSymTable->size = 0;
     return oSymTable;
@@ -83,8 +83,8 @@ int SymTable_put(SymTable_T oSymTable,
     SymTable_T newSymTable;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-    if(oSymTable->size == oSymTable->uBucketCount) {
-        if(oSymTable->uBucketCount-BUCKET_COUNTS[0] == BUCKET_COUNT_SIZE) {
+    if(oSymTable->size == *(oSymTable->uBucketCount)) {
+        if(oSymTable->uBucketCount-BUCKET_COUNTS == BUCKET_COUNT_SIZE) {
             return 0;
         }
         newSymTable = SymTable_new();
