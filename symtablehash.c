@@ -3,27 +3,52 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/*
+    Binding is a representation of a key-value pair and acts like a Node in the linkedlists 
+    inside SymTable. 
+*/
 struct Binding
 {
+    /* key points to an immutable key in the key-value pair. It is of type char*. */
    const char *key;
+    /* value points to the value represented by key in the key-value pair. It is of type void*
+        and can be any type that the client defines. */
    const void *value;
+   /* pNextBinding points to the next key-value pair in the linkedlist. It is of type struct 
+        Binding*.*/
    struct Binding *pNextBinding;
 };
 
+/*
+    SymTable is a representation of the symbol table implemented with a hash table. It contains
+    an array of size uBucketCount containing struct Binding linkedlists, where each linkedlist 
+    in the array corresponds to a hash.
+*/
 struct SymTable
 {
+    /* head points to the first linked list in the array, and head+i-1 represents the ith linked
+        list in the array. It is of type struct Binding**. */
    struct Binding **head;
+    /* size represents the number of key-value pairs within the SymTable. It is of type size_t. */
    size_t size;
+    /* uBucketCount points to a size_t value representing the number of buckets of the hash table.
+        (the number of buckets is the number of items in the linkedlist array). It is of type 
+        size_t*. */
    size_t *uBucketCount;
 };
 
+/* BUCKET_COUNT_SIZE is a size_t variable representing the number of items in the BUCKET_COUNTS
+    array. */
 static const size_t BUCKET_COUNT_SIZE = 8;
+/* BUCKET_COUNTS is a size_t array representing the possible bucket counts that the symbol table
+    can have. These values are chosen because they are efficient with the hash function. */
 static const size_t BUCKET_COUNTS[BUCKET_COUNT_SIZE] = {(size_t)509, (size_t)1021, (size_t)2039, 
     (size_t)4093, (size_t)8191, (size_t)16381, (size_t)32749, (size_t)65521};
 
 /* Return a hash code for pcKey that is between 0 and uBucketCount-1,
-   inclusive. */
-
+   inclusive. Takes in parameters pcKey of type const char* and uBucketCount of type size_t. 
+   pcKey represents the key that the function retrieves a hash code for. uBucketCount represents
+   the number of buckets that the hash code is calculated for.  */
 static size_t SymTable_hash(const char *pcKey, size_t uBucketCount)
 {
    const size_t HASH_MULTIPLIER = 65599;
@@ -44,7 +69,8 @@ SymTable_T SymTable_new(void) {
     if (oSymTable == NULL)
         return NULL;
     oSymTable->uBucketCount = (size_t *)&BUCKET_COUNTS[0];
-    oSymTable->head = (struct Binding **)calloc(*(oSymTable->uBucketCount),sizeof(struct Binding*));
+    oSymTable->head = (struct Binding **)
+        calloc(*(oSymTable->uBucketCount),sizeof(struct Binding*));
     oSymTable->size = 0;
     return oSymTable;
 }
@@ -84,19 +110,22 @@ int SymTable_put(SymTable_T oSymTable,
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
     if(oSymTable->size == *(oSymTable->uBucketCount)) {
-        if((size_t)(oSymTable->uBucketCount-BUCKET_COUNTS) == BUCKET_COUNT_SIZE) {
+        if((size_t)(oSymTable->uBucketCount-BUCKET_COUNTS) 
+            == BUCKET_COUNT_SIZE) {
             return 0;
         }
         newSymTable = SymTable_new();
         if(newSymTable==NULL) return 0;
         newSymTable->uBucketCount = oSymTable->uBucketCount+1;
-        newSymTable->head = (struct Binding **)calloc(*(oSymTable->uBucketCount),sizeof(struct Binding*));
+        newSymTable->head = (struct Binding **)
+            calloc(*(oSymTable->uBucketCount),sizeof(struct Binding*));
         for(iterator = 0; iterator<*(oSymTable->uBucketCount); iterator++) {
             for (pCurrentBinding = oSymTable->head[iterator];
                 pCurrentBinding != NULL;
                 pCurrentBinding = pCurrentBinding->pNextBinding)
             {
-                SymTable_put(newSymTable,pCurrentBinding->key,pCurrentBinding->value);
+                SymTable_put(newSymTable,pCurrentBinding->key,
+                    pCurrentBinding->value);
             }
         }
         *oSymTable = *newSymTable; 
@@ -227,7 +256,8 @@ void SymTable_map(SymTable_T oSymTable,
             pCurrentBinding != NULL;
             pCurrentBinding = pCurrentBinding->pNextBinding)
         {
-            (*pfApply)(pCurrentBinding->key,(void *)pCurrentBinding->value,(void *)pvExtra);
+            (*pfApply)(pCurrentBinding->key,
+                (void *)pCurrentBinding->value,(void *)pvExtra);
         }
     }
 }
