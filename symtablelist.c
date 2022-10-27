@@ -52,18 +52,16 @@ int SymTable_put(SymTable_T oSymTable,
    const char *pcKey, const void *pvValue) {
     struct Binding *pNewBinding;
     struct Binding *pCurrentBinding;
-    struct Binding *NextBinding;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
     for (pCurrentBinding = oSymTable->head;
         pCurrentBinding != NULL;
-        pCurrentBinding = NextBinding)
+        pCurrentBinding = pCurrentBinding->pNextBinding)
     {
-        NextBinding = pCurrentBinding->pNextBinding;
         if(strcmp(pCurrentBinding->key,pcKey)==0) 
             return 0;
-        if(NextBinding==NULL) break;
+        if(pCurrentBinding->pNextBinding==NULL) break;
     }
     pNewBinding = (struct Binding*)malloc(sizeof(struct Binding));
     if(pNewBinding==NULL) return 0;
@@ -135,6 +133,7 @@ void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
 void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     struct Binding *pCurrentBinding;
     struct Binding *prevBinding;
+    void *prevValue;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
     for (pCurrentBinding = oSymTable->head;
@@ -145,10 +144,16 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
             oSymTable->size = oSymTable->size - 1;
             if(prevBinding==NULL) {
                 oSymTable->head = pCurrentBinding->pNextBinding;
-                return (void *)pCurrentBinding->value;
+                prevValue = pCurrentBinding->value;
+                free(pCurrentBinding->key);
+                free(pCurrentBinding);
+                return prevValue;
             }
             prevBinding->pNextBinding= pCurrentBinding->pNextBinding;
-            return (void *)pCurrentBinding->value;
+            prevValue = pCurrentBinding->value;
+            free(pCurrentBinding->key);
+            free(pCurrentBinding);
+            return prevValue;
         }
         prevBinding = pCurrentBinding;
     }
