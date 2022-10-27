@@ -37,11 +37,10 @@ static size_t SymTable_hash(const char *pcKey, size_t uBucketCount)
 
 SymTable_T SymTable_new(void) {
     SymTable_T oSymTable;
-    size_t iterator;
     oSymTable = (SymTable_T)malloc(sizeof(struct SymTable));
     if (oSymTable == NULL)
         return NULL;
-    oSymTable->head = (struct Binding **)calloc(uBucketCount,sizeof(struct Binding*))
+    oSymTable->head = (struct Binding **)calloc(uBucketCount,sizeof(struct Binding*));
     oSymTable->size = 0;
     return oSymTable;
 }
