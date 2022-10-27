@@ -17,7 +17,8 @@ struct SymTable
    size_t *uBucketCount
 };
 
-const size_t *BUCKET_COUNTS = {509, 1021, 2039, 4093, 8191, 16381, 32749, 65521};
+const size_t BUCKET_COUNTS[18] = {(size_t)509, (size_t)1021, (size_t)2039, 
+    (size_t)4093, (size_t)8191, (size_t)16381, (size_t)32749, (size_t)65521};
 const size_t BUCKET_COUNT_SIZE = 8;
 
 /* Return a hash code for pcKey that is between 0 and uBucketCount-1,
@@ -42,9 +43,9 @@ SymTable_T SymTable_new(void) {
     oSymTable = (SymTable_T)malloc(sizeof(struct SymTable));
     if (oSymTable == NULL)
         return NULL;
-    oSymTable->head = (struct Binding **)calloc(uBucketCount,sizeof(struct Binding*));
+    oSymTable->uBucketCount = &BUCKET_COUNTS[0];
+    oSymTable->head = (struct Binding **)calloc(oSymTable->uBucketCount,sizeof(struct Binding*));
     oSymTable->size = 0;
-    oSymTable->uBucketCount = BUCKET_COUNTS[0];
     return oSymTable;
 }
 
@@ -54,7 +55,7 @@ void SymTable_free(SymTable_T oSymTable) {
     size_t index;
     assert(oSymTable != NULL);
     index = 0;
-    for(index = 0; index<uBucketCount; index++) {
+    for(index = 0; index<*(oSymTable->uBucketCount); index++) {
         for (pCurrentBinding = oSymTable->head[index];
             pCurrentBinding != NULL;
             pCurrentBinding = pNextBinding)
@@ -90,7 +91,7 @@ int SymTable_put(SymTable_T oSymTable,
         if(newSymTable==NULL) return 0;
         newSymTable->uBucketCount = oSymTable->uBucketCount+1;
         newSymTable->head = (struct Binding **)calloc(newSymTable->uBucketCount,sizeof(struct Binding*));
-        for(iterator = 0; iterator<oSymTable->uBucketCount; iterator++) {
+        for(iterator = 0; iterator<*(oSymTable->uBucketCount); iterator++) {
             for (pCurrentBinding = oSymTable->head[iterator];
                 pCurrentBinding != NULL;
                 pCurrentBinding = pCurrentBinding->pNextBinding)
@@ -220,7 +221,7 @@ void SymTable_map(SymTable_T oSymTable,
     size_t index;
     assert(oSymTable != NULL);
     assert(pfApply != NULL);
-    for(index = 0; index<oSymTable->uBucketCount; index++) {
+    for(index = 0; index<*(oSymTable->uBucketCount); index++) {
         for (pCurrentBinding = oSymTable->head[index];
             pCurrentBinding != NULL;
             pCurrentBinding = pCurrentBinding->pNextBinding)
