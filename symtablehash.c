@@ -73,26 +73,6 @@ size_t SymTable_getLength(SymTable_T oSymTable) {
     return oSymTable->size;
 }
 
-void reHash(SymTable_T oSymTable) {
-    struct SymTable *newSymTable;
-    size_t iterator;
-    struct Binding *pCurrentBinding;
-    if(oSymTable->uBucketCount-BUCKET_COUNTS[0] == BUCKET_COUNT_SIZE) {
-        return 0;
-    }
-    newSymTable->uBucketCount = oSymTable->uBucketCount+1;
-    newSymTable->head = (struct Binding **)calloc(newSymTable->uBucketCount,sizeof(struct Binding*));
-    for(iterator = 0; iterator<oSymTable->uBucketCount; iterator++) {
-        for (pCurrentBinding = oSymTable->head[iterator];
-            pCurrentBinding != NULL;
-            pCurrentBinding = pCurrentBinding->pNextBinding)
-        {
-            SymTable_put((SymTable_T)newSymTable,pCurrentBinding->key,pCurrentBinding->value);
-        }
-    }
-    &oSymTable = &newSymTable; 
-}
-
 int SymTable_put(SymTable_T oSymTable, 
    const char *pcKey, const void *pvValue) {
     struct Binding *pNewBinding;
