@@ -101,7 +101,7 @@ int SymTable_put(SymTable_T oSymTable,
         }
         *oSymTable = *newSymTable; 
     }
-    index = SymTable_hash(pcKey, oSymTable->uBucketCount);
+    index = SymTable_hash(pcKey, *(oSymTable->uBucketCount));
     for (pCurrentBinding = oSymTable->head[index];
         pCurrentBinding != NULL;
         pCurrentBinding = pCurrentBinding->pNextBinding)
@@ -137,7 +137,7 @@ void *SymTable_replace(SymTable_T oSymTable,
     size_t index;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-    index = SymTable_hash(pcKey,oSymTable->uBucketCount);
+    index = SymTable_hash(pcKey,*(oSymTable->uBucketCount));
     for (pCurrentBinding = oSymTable->head[index];
         pCurrentBinding != NULL;
         pCurrentBinding = pCurrentBinding->pNextBinding)
@@ -156,7 +156,7 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
     size_t index;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-    index = SymTable_hash(pcKey,oSymTable->uBucketCount);
+    index = SymTable_hash(pcKey,*(oSymTable->uBucketCount));
     for (pCurrentBinding = oSymTable->head[index];
         pCurrentBinding != NULL;
         pCurrentBinding = pCurrentBinding->pNextBinding)
@@ -172,7 +172,7 @@ void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
     size_t index;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-    index = SymTable_hash(pcKey,oSymTable->uBucketCount);
+    index = SymTable_hash(pcKey,*(oSymTable->uBucketCount));
     for (pCurrentBinding = oSymTable->head[index];
         pCurrentBinding != NULL;
         pCurrentBinding = pCurrentBinding->pNextBinding)
@@ -190,7 +190,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     size_t index;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-    index = SymTable_hash(pcKey,oSymTable->uBucketCount);
+    index = SymTable_hash(pcKey,*(oSymTable->uBucketCount));
     for (pCurrentBinding = oSymTable->head[index];
         pCurrentBinding != NULL;
         pCurrentBinding = pCurrentBinding->pNextBinding)
