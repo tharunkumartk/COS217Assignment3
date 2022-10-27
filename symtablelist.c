@@ -145,14 +145,14 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
             if(prevBinding==NULL) {
                 oSymTable->head = pCurrentBinding->pNextBinding;
                 prevValue = pCurrentBinding->value;
-                free(pCurrentBinding->key);
-                free(pCurrentBinding);
+                free((void *)pCurrentBinding->key);
+                free((void *)pCurrentBinding);
                 return prevValue;
             }
             prevBinding->pNextBinding= pCurrentBinding->pNextBinding;
             prevValue = pCurrentBinding->value;
-            free(pCurrentBinding->key);
-            free(pCurrentBinding);
+            free((void *)pCurrentBinding->key);
+            free((void *)pCurrentBinding);
             return prevValue;
         }
         prevBinding = pCurrentBinding;
