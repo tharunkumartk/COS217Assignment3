@@ -65,7 +65,7 @@ void SymTable_free(SymTable_T oSymTable) {
             free(pCurrentBinding);
         }
     }
-    free(oSymTable0->head);
+    free(oSymTable->head);
     free(oSymTable);
 }
 
