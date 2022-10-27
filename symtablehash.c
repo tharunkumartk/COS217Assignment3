@@ -99,7 +99,7 @@ int SymTable_put(SymTable_T oSymTable,
                 SymTable_put(newSymTable,pCurrentBinding->key,pCurrentBinding->value);
             }
         }
-        &oSymTable = &newSymTable; 
+        *oSymTable = *newSymTable; 
     }
     index = SymTable_hash(pcKey, oSymTable->uBucketCount);
     for (pCurrentBinding = oSymTable->head[index];
