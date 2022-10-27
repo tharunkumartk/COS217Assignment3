@@ -12,7 +12,7 @@ struct Binding
 
 struct SymTable
 {
-   struct Binding **bindings;
+   struct Binding **head;
    size_t size;
 };
 
