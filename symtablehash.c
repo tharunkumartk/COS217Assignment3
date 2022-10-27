@@ -14,9 +14,11 @@ struct SymTable
 {
    struct Binding **head;
    size_t size;
+   size_t *uBucketCount
 };
 
-size_t uBucketCount = 509;
+const size_t *BUCKET_COUNTS = {509, 1021, 2039, 4093, 8191, 16381, 32749, 65521};
+const size_t BUCKET_COUNT_SIZE = 8;
 
 /* Return a hash code for pcKey that is between 0 and uBucketCount-1,
    inclusive. */
@@ -42,6 +44,7 @@ SymTable_T SymTable_new(void) {
         return NULL;
     oSymTable->head = (struct Binding **)calloc(uBucketCount,sizeof(struct Binding*));
     oSymTable->size = 0;
+    oSymTable->uBucketCount = BUCKET_COUNTS[0];
     return oSymTable;
 }
 
@@ -70,14 +73,54 @@ size_t SymTable_getLength(SymTable_T oSymTable) {
     return oSymTable->size;
 }
 
+void reHash(SymTable_T oSymTable) {
+    struct SymTable *newSymTable;
+    size_t iterator;
+    struct Binding *pCurrentBinding;
+    if(oSymTable->uBucketCount-BUCKET_COUNTS[0] == BUCKET_COUNT_SIZE) {
+        return 0;
+    }
+    newSymTable->uBucketCount = oSymTable->uBucketCount+1;
+    newSymTable->head = (struct Binding **)calloc(newSymTable->uBucketCount,sizeof(struct Binding*));
+    for(iterator = 0; iterator<oSymTable->uBucketCount; iterator++) {
+        for (pCurrentBinding = oSymTable->head[iterator];
+            pCurrentBinding != NULL;
+            pCurrentBinding = pCurrentBinding->pNextBinding)
+        {
+            SymTable_put((SymTable_T)newSymTable,pCurrentBinding->key,pCurrentBinding->value);
+        }
+    }
+    &oSymTable = &newSymTable; 
+}
+
 int SymTable_put(SymTable_T oSymTable, 
    const char *pcKey, const void *pvValue) {
     struct Binding *pNewBinding;
     struct Binding *pCurrentBinding;
+    size_t iterator;
     size_t index;
+    SymTable_T newSymTable;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-    index = SymTable_hash(pcKey, uBucketCount);
+    if(oSymTable->size == oSymTable->uBucketCount) {
+        if(oSymTable->uBucketCount-BUCKET_COUNTS[0] == BUCKET_COUNT_SIZE) {
+            return 0;
+        }
+        newSymTable = SymTable_new();
+        if(newSymTable==NULL) return 0;
+        newSymTable->uBucketCount = oSymTable->uBucketCount+1;
+        newSymTable->head = (struct Binding **)calloc(newSymTable->uBucketCount,sizeof(struct Binding*));
+        for(iterator = 0; iterator<oSymTable->uBucketCount; iterator++) {
+            for (pCurrentBinding = oSymTable->head[iterator];
+                pCurrentBinding != NULL;
+                pCurrentBinding = pCurrentBinding->pNextBinding)
+            {
+                SymTable_put(newSymTable,pCurrentBinding->key,pCurrentBinding->value);
+            }
+        }
+        &oSymTable = &newSymTable; 
+    }
+    index = SymTable_hash(pcKey, oSymTable->uBucketCount);
     for (pCurrentBinding = oSymTable->head[index];
         pCurrentBinding != NULL;
         pCurrentBinding = pCurrentBinding->pNextBinding)
@@ -113,7 +156,7 @@ void *SymTable_replace(SymTable_T oSymTable,
     size_t index;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-    index = SymTable_hash(pcKey,uBucketCount);
+    index = SymTable_hash(pcKey,oSymTable->uBucketCount);
     for (pCurrentBinding = oSymTable->head[index];
         pCurrentBinding != NULL;
         pCurrentBinding = pCurrentBinding->pNextBinding)
@@ -132,7 +175,7 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
     size_t index;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-    index = SymTable_hash(pcKey,uBucketCount);
+    index = SymTable_hash(pcKey,oSymTable->uBucketCount);
     for (pCurrentBinding = oSymTable->head[index];
         pCurrentBinding != NULL;
         pCurrentBinding = pCurrentBinding->pNextBinding)
@@ -148,7 +191,7 @@ void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
     size_t index;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-    index = SymTable_hash(pcKey,uBucketCount);
+    index = SymTable_hash(pcKey,oSymTable->uBucketCount);
     for (pCurrentBinding = oSymTable->head[index];
         pCurrentBinding != NULL;
         pCurrentBinding = pCurrentBinding->pNextBinding)
@@ -166,7 +209,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     size_t index;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-    index = SymTable_hash(pcKey,uBucketCount);
+    index = SymTable_hash(pcKey,oSymTable->uBucketCount);
     for (pCurrentBinding = oSymTable->head[index];
         pCurrentBinding != NULL;
         pCurrentBinding = pCurrentBinding->pNextBinding)
@@ -197,7 +240,7 @@ void SymTable_map(SymTable_T oSymTable,
     size_t index;
     assert(oSymTable != NULL);
     assert(pfApply != NULL);
-    for(index = 0; index<uBucketCount; index++) {
+    for(index = 0; index<oSymTable->uBucketCount; index++) {
         for (pCurrentBinding = oSymTable->head[index];
             pCurrentBinding != NULL;
             pCurrentBinding = pCurrentBinding->pNextBinding)
