@@ -112,7 +112,7 @@ static int SymTable_expand(SymTable_T oSymTable) {
     if(newSymTable==NULL) return 0;
     newSymTable->uBucketCount = oSymTable->uBucketCount+1;
     newSymTable->head = (struct Binding **)
-        calloc(*(oSymTable->uBucketCount),sizeof(struct Binding*));
+        calloc(*(newSymTable->uBucketCount),sizeof(struct Binding*));
     for(iterator = 0; iterator<*(oSymTable->uBucketCount); iterator++) {
         for (pCurrentBinding = oSymTable->head[iterator];
             pCurrentBinding != NULL;
@@ -145,7 +145,6 @@ int SymTable_put(SymTable_T oSymTable,
         pCurrentBinding != NULL;
         pCurrentBinding = pCurrentBinding->pNextBinding)
     {
-        printf("%s",pCurrentBinding->key);
         if(strcmp(pCurrentBinding->key,pcKey)==0) 
             return 0;
         if(pCurrentBinding->pNextBinding==NULL) break;
