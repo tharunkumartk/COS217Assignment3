@@ -8,12 +8,12 @@ CFLAGS =
 # Dependency rules for non-file targets
 all: testsymtablelist testsymtablehash
 listall:	testsymtablelist
-listclobber:	clean
+listclobber:	listclean
 	rm -f *~ \#*\#
 listclean:
 	rm -f testsymtablelist *.o
 hashall:	testsymtablehash
-hashclobber:	clean
+hashclobber:	hashclean
 	rm -f *~ \#*\#
 hashclean:
 	rm -f testsymtablehash *.o
