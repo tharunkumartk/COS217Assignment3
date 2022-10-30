@@ -100,38 +100,46 @@ size_t SymTable_getLength(SymTable_T oSymTable) {
     return oSymTable->size;
 }
 
+static int SymTable_expand(SymTable_T oSymTable) {
+    SymTable_T newSymTable;
+    struct Binding *pCurrentBinding;
+    size_t iterator;
+    if((size_t)(oSymTable->uBucketCount-BUCKET_COUNTS) 
+            == BUCKET_COUNT_SIZE) {
+        return 0;
+    }
+    newSymTable = SymTable_new();
+    if(newSymTable==NULL) return 0;
+    newSymTable->uBucketCount = oSymTable->uBucketCount+1;
+    newSymTable->head = (struct Binding **)
+        calloc(*(oSymTable->uBucketCount),sizeof(struct Binding*));
+    for(iterator = 0; iterator<*(oSymTable->uBucketCount); iterator++) {
+        for (pCurrentBinding = oSymTable->head[iterator];
+            pCurrentBinding != NULL;
+            pCurrentBinding = pCurrentBinding->pNextBinding)
+        {
+            SymTable_put(newSymTable,pCurrentBinding->key,
+                pCurrentBinding->value);
+        }
+    }
+    free(oSymTable->head);
+    oSymTable->head = newSymTable->head; 
+    oSymTable->uBucketCount = newSymTable->uBucketCount;
+    oSymTable->size = newSymTable->size;
+    return 1;
+}
+
 int SymTable_put(SymTable_T oSymTable, 
    const char *pcKey, const void *pvValue) {
     struct Binding *pNewBinding;
     struct Binding *pCurrentBinding;
-    size_t iterator;
     size_t index;
     SymTable_T newSymTable;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
     if(oSymTable->size == *(oSymTable->uBucketCount)) {
-        if((size_t)(oSymTable->uBucketCount-BUCKET_COUNTS) 
-            == BUCKET_COUNT_SIZE) {
-            return 0;
-        }
-        newSymTable = SymTable_new();
-        if(newSymTable==NULL) return 0;
-        newSymTable->uBucketCount = oSymTable->uBucketCount+1;
-        newSymTable->head = (struct Binding **)
-            calloc(*(oSymTable->uBucketCount),sizeof(struct Binding*));
-        for(iterator = 0; iterator<*(oSymTable->uBucketCount); iterator++) {
-            for (pCurrentBinding = oSymTable->head[iterator];
-                pCurrentBinding != NULL;
-                pCurrentBinding = pCurrentBinding->pNextBinding)
-            {
-                SymTable_put(newSymTable,pCurrentBinding->key,
-                    pCurrentBinding->value);
-            }
-        }
-        free(oSymTable->head);
-        oSymTable->head = newSymTable->head; 
-        oSymTable->uBucketCount = newSymTable->uBucketCount;
-        oSymTable->size = newSymTable->size;
+        if(SymTable_expand(oSymTable)==0)
+            return 0
     }
     index = SymTable_hash(pcKey, *(oSymTable->uBucketCount));
     for (pCurrentBinding = oSymTable->head[index];
