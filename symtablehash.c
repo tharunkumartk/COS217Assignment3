@@ -128,10 +128,8 @@ int SymTable_put(SymTable_T oSymTable,
                     pCurrentBinding->value);
             }
         }
-        free(oSymTable->head);
-        oSymTable->head = newSymTable->head; 
-        oSymTable->uBucketCount = newSymTable->uBucketCount;
-        oSymTable->size = newSymTable->size;
+        free(oSymTable);
+        oSymTable=newSymTable;
     }
     index = SymTable_hash(pcKey, *(oSymTable->uBucketCount));
     for (pCurrentBinding = oSymTable->head[index];
