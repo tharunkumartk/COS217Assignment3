@@ -139,7 +139,7 @@ int SymTable_put(SymTable_T oSymTable,
     assert(pcKey != NULL);
     if(oSymTable->size == *(oSymTable->uBucketCount)) {
         if(SymTable_expand(oSymTable)==0)
-            return 0
+            return 0;
     }
     index = SymTable_hash(pcKey, *(oSymTable->uBucketCount));
     for (pCurrentBinding = oSymTable->head[index];
