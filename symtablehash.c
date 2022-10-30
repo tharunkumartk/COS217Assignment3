@@ -134,7 +134,6 @@ int SymTable_put(SymTable_T oSymTable,
     struct Binding *pNewBinding;
     struct Binding *pCurrentBinding;
     size_t index;
-    SymTable_T newSymTable;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
     if(oSymTable->size == *(oSymTable->uBucketCount)) {
