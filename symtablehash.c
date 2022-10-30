@@ -42,7 +42,7 @@ struct SymTable
 static const size_t BUCKET_COUNT_SIZE = 8;
 /* BUCKET_COUNTS is a size_t array representing the possible bucket counts that the symbol table
     can have. These values are chosen because they are efficient with the hash function. */
-static const size_t BUCKET_COUNTS[BUCKET_COUNT_SIZE] = {(size_t)509, (size_t)1021, (size_t)2039, 
+static const size_t BUCKET_COUNTS[8] = {(size_t)509, (size_t)1021, (size_t)2039, 
     (size_t)4093, (size_t)8191, (size_t)16381, (size_t)32749, (size_t)65521};
 
 /* Return a hash code for pcKey that is between 0 and uBucketCount-1,
