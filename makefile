@@ -1,8 +1,8 @@
 # Macros
 CC = gcc217
 # CC = gcc217m
-# CFLAGS =
-CFLAGS = -g
+CFLAGS =
+# CFLAGS = -g
 # CFLAGS = -D NDEBUG
 # CFLAGS = -D NDEBUG -O
 # Dependency rules for non-file targets
