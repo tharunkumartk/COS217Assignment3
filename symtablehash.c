@@ -132,6 +132,13 @@ static int SymTable_expand(SymTable_T oSymTable) {
         return 0;
     }
     newSymTable->uBucketCount = oSymTable->uBucketCount+1;
+    free(newSymTable->head);
+    newSymTable->head = (struct Binding **)
+        calloc(*(newSymTable->uBucketCount),sizeof(struct Binding*));
+    if (newSymTable->head == NULL) {
+        free(newSymTable);
+        return 0;
+    }
     for(iterator = 0; iterator<*(oSymTable->uBucketCount); iterator++) {
         for (pCurrentBinding = oSymTable->head[iterator];
             pCurrentBinding != NULL;
