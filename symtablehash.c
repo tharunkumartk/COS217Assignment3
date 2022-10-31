@@ -249,8 +249,8 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     size_t index;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-    prevBinding = oSymTable->head;
     index = SymTable_hash(pcKey,*(oSymTable->uBucketCount));
+    prevBinding = oSymTable->head[index];
     for (pCurrentBinding = oSymTable->head[index];
         pCurrentBinding != NULL;
         pCurrentBinding = pCurrentBinding->pNextBinding)
