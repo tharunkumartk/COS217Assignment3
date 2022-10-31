@@ -124,7 +124,7 @@ static int SymTable_expand(SymTable_T oSymTable) {
     struct Binding *pCurrentBinding;
     size_t iterator;
     if((size_t)(oSymTable->uBucketCount-BUCKET_COUNTS) 
-            == BUCKET_COUNT_SIZE) {
+            == BUCKET_COUNT_SIZE-1) {
         return -1;
     }
     newSymTable = SymTable_new();
