@@ -1,5 +1,6 @@
 CC = gcc217
-all:	testsymtablelist
+all:	
+	testsymtablelist
 	testsymtablehash
 clobber:	clean
 	rm -f *~ \#*\#
