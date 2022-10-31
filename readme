@@ -68,21 +68,17 @@ disagreements with them? Copy the critTer warnings here, and express
 your disagreement after each warning. If there are no warnings, then
 write "None."
 
-   symtablehash.c: line 157: medium priority:
-   Do you want to validate 'pvValue' through an assert?
-
-pvValue can be NULL, it is just pcKey that cannot be NULL. 
-
-   symtablehash.c: line 197: medium priority:
+   symtablelist.c: line 72: medium priority:
    Do you want to validate 'pvValue' through an assert?
 pvValue can be NULL, it is just pcKey that cannot be NULL. 
 
-   symtablehash.c: line 283: medium priority:
+   symtablelist.c: line 107: medium priority:
+   Do you want to validate 'pvValue' through an assert?
+pvValue can be NULL, it is just pcKey that cannot be NULL. 
+
+   symtablelist.c: line 185: medium priority:
    Do you want to validate 'pvExtra' through an assert?
 pvExtra can be NULL, it depends on the function that the client passes in. 
-
-   symtablehash.c: line 157: low priority: 
-   This function definition probably needs more local comments
 
 
 ------------------------------------------------------------------------
@@ -99,6 +95,17 @@ disagreements with them? Copy the critTer warnings here, and express
 your disagreement after each warning. If there are no warnings, then
 write "None."
 
+   symtablehash.c: line 157: medium priority:
+   Do you want to validate 'pvValue' through an assert?
+pvValue can be NULL, it is just pcKey that cannot be NULL. 
+
+   symtablehash.c: line 197: medium priority:
+   Do you want to validate 'pvValue' through an assert?
+pvValue can be NULL, it is just pcKey that cannot be NULL. 
+
+   symtablehash.c: line 283: medium priority:
+   Do you want to validate 'pvExtra' through an assert?
+pvExtra can be NULL, it depends on the function that the client passes in. 
 
 
 ------------------------------------------------------------------------
@@ -108,10 +115,10 @@ implementation, (2) your non-expanding hash table implementation, and
 (3) your expanding hash table implementation? Fill in the blanks.
 
 The linked list implementation with:
--- 50 bindings consumed ________ seconds.
--- 500 bindings consumed ________ seconds.
--- 5000 bindings consumed ________ seconds.
--- 50000 bindings consumed ________ seconds.
+-- 50 bindings consumed 0.000000 seconds.
+-- 500 bindings consumed 0.001266 seconds.
+-- 5000 bindings consumed 1.059689 seconds.
+-- 50000 bindings consumed 104.787432 seconds.
 -- 500000 bindings consumed ________ seconds.
 
 The non-expanding hash table implementation with:
@@ -122,8 +129,8 @@ The non-expanding hash table implementation with:
 -- 500000 bindings consumed ________ seconds.
 
 The expanding hash table implementation with:
--- 50 bindings consumed ________ seconds.
--- 500 bindings consumed ________ seconds.
--- 5000 bindings consumed ________ seconds.
--- 50000 bindings consumed ________ seconds.
--- 500000 bindings consumed ________ seconds.
+-- 50 bindings consumed 0.000000 seconds.
+-- 500 bindings consumed 0.001880 seconds.
+-- 5000 bindings consumed 0.013804 seconds.
+-- 50000 bindings consumed 0.148500 seconds.
+-- 500000 bindings consumed 20.767725 seconds.
