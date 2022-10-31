@@ -168,6 +168,7 @@ int SymTable_put(SymTable_T oSymTable,
         if(SymTable_expand(oSymTable)!=1)
             return 0;
     }
+    /* Traversing to the end of the linkedlist at the hashed index. */
     index = SymTable_hash(pcKey, *(oSymTable->uBucketCount));
     for (pCurrentBinding = oSymTable->head[index];
         pCurrentBinding != NULL;
@@ -188,6 +189,7 @@ int SymTable_put(SymTable_T oSymTable,
     strcpy((char*)pNewBinding->key, pcKey);
     pNewBinding->value = pvValue;
     pNewBinding->pNextBinding = NULL;
+    /* Handling if item is first Binding in LinkedList. */
     if(oSymTable->head[index] == NULL) {
         oSymTable->head[index] = pNewBinding;
         oSymTable->size = oSymTable->size + 1;
