@@ -2,6 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
+
 
 /*
     Binding is a representation of a key-value pair and acts like a Node in the linkedlists 
@@ -71,6 +73,10 @@ SymTable_T SymTable_new(void) {
     oSymTable->uBucketCount = (size_t *)&BUCKET_COUNTS[0];
     oSymTable->head = (struct Binding **)
         calloc(*(oSymTable->uBucketCount),sizeof(struct Binding*));
+    if(oSymTable->head == NULL) {
+        free(oSymTable);
+        return NULL;
+    }
     oSymTable->size = 0;
     return oSymTable;
 }
@@ -100,19 +106,37 @@ size_t SymTable_getLength(SymTable_T oSymTable) {
     return oSymTable->size;
 }
 
+/*
+    SymTable_expand is a helper function for the SymTable_put function that expands 
+    the parameter oSymTable by increasing its bucket counts. It is a static function
+    that is only required and called on by SymTable_put. The parameter is a SymTable_T
+    representing the SymTable that needs to be expanded. The function returns an integer
+    representing whether the expansion was successful or not. It returns 1 representing
+    success, and 0 representing failure due to lack of memory, and -1 representing failure 
+    due to reaching max buckets. Also prints to stderr an error message representing what
+    type of failiure it was (lack of memory or max bucket count).
+*/
 static int SymTable_expand(SymTable_T oSymTable) {
     SymTable_T newSymTable;
     struct Binding *pCurrentBinding;
     size_t iterator;
     if((size_t)(oSymTable->uBucketCount-BUCKET_COUNTS) 
             == BUCKET_COUNT_SIZE) {
-        return 0;
+        fprintf(stderr,"Unsuccessful expansion; reached maximum BucketCount.");
+        return -1;
     }
     newSymTable = SymTable_new();
-    if(newSymTable==NULL) return 0;
+    if(newSymTable==NULL) {
+        fprintf(stderr,"Unsuccessful expansion due to lack of memory.");
+        return 0;
+    }
     newSymTable->uBucketCount = oSymTable->uBucketCount+1;
     newSymTable->head = (struct Binding **)
         calloc(*(newSymTable->uBucketCount),sizeof(struct Binding*));
+    if (newSymTable->head == NULL) {
+        fprintf(stderr,"Unsuccessful expansion due to lack of memory.");
+        return 0;
+    }
     for(iterator = 0; iterator<*(oSymTable->uBucketCount); iterator++) {
         for (pCurrentBinding = oSymTable->head[iterator];
             pCurrentBinding != NULL;

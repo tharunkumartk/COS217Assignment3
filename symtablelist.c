@@ -2,6 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
+
 
 /*
     Binding is a representation of a key-value pair and acts like a Node in the linkedlists 
