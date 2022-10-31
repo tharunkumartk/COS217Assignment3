@@ -74,7 +74,6 @@ int SymTable_put(SymTable_T oSymTable,
     struct Binding *pCurrentBinding;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-
     for (pCurrentBinding = oSymTable->head;
         pCurrentBinding != NULL;
         pCurrentBinding = pCurrentBinding->pNextBinding)
@@ -83,6 +82,7 @@ int SymTable_put(SymTable_T oSymTable,
             return 0;
         if(pCurrentBinding->pNextBinding==NULL) break;
     }
+    /* Create a new binding with the given key-value pair. */
     pNewBinding = (struct Binding*)malloc(sizeof(struct Binding));
     if(pNewBinding==NULL) return 0;
     pNewBinding->key = (const char*)malloc(strlen(pcKey) + 1);

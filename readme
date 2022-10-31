@@ -60,7 +60,7 @@ disagreements with them? Copy the splint warnings here, and express your
 disagreement after each warning. If there are no warnings, then write
 "None."
 
-
+None
 
 ------------------------------------------------------------------------
 What warnings does critTer generate on symtablelist.c, and what are your
@@ -68,6 +68,21 @@ disagreements with them? Copy the critTer warnings here, and express
 your disagreement after each warning. If there are no warnings, then
 write "None."
 
+   symtablehash.c: line 157: medium priority:
+   Do you want to validate 'pvValue' through an assert?
+
+pvValue can be NULL, it is just pcKey that cannot be NULL. 
+
+   symtablehash.c: line 197: medium priority:
+   Do you want to validate 'pvValue' through an assert?
+pvValue can be NULL, it is just pcKey that cannot be NULL. 
+
+   symtablehash.c: line 283: medium priority:
+   Do you want to validate 'pvExtra' through an assert?
+pvExtra can be NULL, it depends on the function that the client passes in. 
+
+   symtablehash.c: line 157: low priority: 
+   This function definition probably needs more local comments
 
 
 ------------------------------------------------------------------------
