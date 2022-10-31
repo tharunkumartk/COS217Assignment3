@@ -1,3 +1,7 @@
+/*
+    Name: Tharun Kumar Tiruppali Kalidoss
+    File Name: symtablehash.c
+*/
 #include "symtable.h"
 #include <string.h>
 #include <stdlib.h>

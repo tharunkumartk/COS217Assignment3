@@ -1,3 +1,7 @@
+/*
+    Name: Tharun Kumar Tiruppali Kalidoss
+    File Name: symtable.h
+*/
 #include <stddef.h>
 #ifndef SYMTABLE_INCLUDED
 #define SYMTABLE_INCLUDED
