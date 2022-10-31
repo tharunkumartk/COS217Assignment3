@@ -3,10 +3,6 @@ clobber:	clean
 	rm -f *~ \#*\#
 clean: 	
 	rm -f testsymtablelist testsymtablehash *.o
-listall:	testsymtablelist
-
-hashall:	testsymtablehash
-
 
 testsymtablelist: testsymtable.o symtablelist.o
 	gcc217 symtablelist.o testsymtable.o -o testsymtablelist
