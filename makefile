@@ -1,4 +1,4 @@
-all:	listall	hashall
+all: testsymtablelist testsymtablehash
 clobber:	clean
 	rm -f *~ \#*\#
 clean: 	
