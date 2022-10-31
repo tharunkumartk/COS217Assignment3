@@ -1,6 +1,4 @@
-all:	
-	listall
-	hashall
+all:	listall	hashall
 clobber:	clean
 	rm -f *~ \#*\#
 clean: 	
