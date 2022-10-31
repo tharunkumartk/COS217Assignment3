@@ -113,8 +113,7 @@ size_t SymTable_getLength(SymTable_T oSymTable) {
     representing the SymTable that needs to be expanded. The function returns an integer
     representing whether the expansion was successful or not. It returns 1 representing
     success, and 0 representing failure due to lack of memory, and -1 representing failure 
-    due to reaching max buckets. Also prints to stderr an error message representing what
-    type of failiure it was (lack of memory or max bucket count).
+    due to reaching max buckets. 
 */
 static int SymTable_expand(SymTable_T oSymTable) {
     SymTable_T newSymTable;
@@ -122,19 +121,16 @@ static int SymTable_expand(SymTable_T oSymTable) {
     size_t iterator;
     if((size_t)(oSymTable->uBucketCount-BUCKET_COUNTS) 
             == BUCKET_COUNT_SIZE) {
-        fprintf(stderr,"Unsuccessful expansion; reached maximum BucketCount.");
         return -1;
     }
     newSymTable = SymTable_new();
     if(newSymTable==NULL) {
-        fprintf(stderr,"Unsuccessful expansion due to lack of memory.");
         return 0;
     }
     newSymTable->uBucketCount = oSymTable->uBucketCount+1;
     newSymTable->head = (struct Binding **)
         calloc(*(newSymTable->uBucketCount),sizeof(struct Binding*));
     if (newSymTable->head == NULL) {
-        fprintf(stderr,"Unsuccessful expansion due to lack of memory.");
         return 0;
     }
     for(iterator = 0; iterator<*(oSymTable->uBucketCount); iterator++) {
