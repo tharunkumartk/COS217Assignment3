@@ -119,7 +119,7 @@ The linked list implementation with:
 -- 500 bindings consumed 0.001266 seconds.
 -- 5000 bindings consumed 1.059689 seconds.
 -- 50000 bindings consumed 104.787432 seconds.
--- 500000 bindings consumed ________ seconds.
+-- 500000 bindings consumed 220 seconds.
 
 The non-expanding hash table implementation with:
 -- 50 bindings consumed 0.000000 seconds.
@@ -133,4 +133,4 @@ The expanding hash table implementation with:
 -- 500 bindings consumed 0.000000 seconds.
 -- 5000 bindings consumed 0.013804 seconds.
 -- 50000 bindings consumed 0.148500 seconds.
--- 500000 bindings consumed 20.767725 seconds.
+-- 500000 bindings consumed 1.637087 seconds.
