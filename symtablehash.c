@@ -160,6 +160,10 @@ int SymTable_put(SymTable_T oSymTable,
     size_t index;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
+    /*
+        Checking if oSymTable needs to be expanded. If it requires expansion,
+        call the SymTable_expand() function. 
+    */
     if(oSymTable->size == *(oSymTable->uBucketCount)) {
         if(SymTable_expand(oSymTable)!=1)
             return 0;
@@ -173,6 +177,7 @@ int SymTable_put(SymTable_T oSymTable,
             return 0;
         if(pCurrentBinding->pNextBinding==NULL) break;
     }
+    /* Create a new binding with the given key-value pair. */
     pNewBinding = (struct Binding*)malloc(sizeof(struct Binding));
     if(pNewBinding==NULL) return 0;
     pNewBinding->key = (const char*)malloc(strlen(pcKey) + 1);
