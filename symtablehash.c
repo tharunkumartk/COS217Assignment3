@@ -164,10 +164,10 @@ int SymTable_put(SymTable_T oSymTable,
         Checking if oSymTable needs to be expanded. If it requires expansion,
         call the SymTable_expand() function. 
     */
-   /* if(oSymTable->size == *(oSymTable->uBucketCount)) {
-        if(SymTable_expand(oSymTable)!=1)
+    if(oSymTable->size == *(oSymTable->uBucketCount)) {
+        if(SymTable_expand(oSymTable)==0)
             return 0;
-    } */
+    }
     /* Traversing to the end of the linkedlist at the hashed index. */
     index = SymTable_hash(pcKey, *(oSymTable->uBucketCount));
     for (pCurrentBinding = oSymTable->head[index];
